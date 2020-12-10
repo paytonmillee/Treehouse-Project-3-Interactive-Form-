@@ -2,6 +2,9 @@
 let name=document.getElementById('name');
     name.focus();
 
+
+    // this function will alllow the job role element to give you options of what job you are looking for and if chosen "other" then it will be 
+    //displayed on the other side if selected and will be focused on instead of the regular job role options.
    let jobRole=document.getElementById('title'); 
     let otherJobRole=document.getElementById('other-job-role');
 
@@ -15,6 +18,11 @@ let name=document.getElementById('name');
        }
        
    });
+
+   //this function will allow you to focus on each area in the shirt section. This involves picking a size, picking the type of design and shirt colors.
+   //the shirt colors are divided up by design through the event listnener. As you pick the design the colors are seperated into the appropriate group 
+   //they belong to. Once a design has been picked that specific design and its colors will be displayed , while the other options will be hidden
+   //by the removeAttribute element.
    
    let design = document.getElementById('design');
    let color = document.getElementById('color');
@@ -43,6 +51,9 @@ if (value === shirtTheme) {
 };
 
 });
+
+// this function allows you to select which activities seminar you would like to take along with giving you the price of what each activity will
+//be. ALso will continue to add more if you choose to do multiples of classes.
     let registerForActivities=document.getElementById('activities');
     let activitiesCost=document.getElementById('activities-cost');
     let totalCost=0;
@@ -61,6 +72,9 @@ if (value === shirtTheme) {
         activitiesCost.innerHTML= `Total: $${totalCost}`;
     });    
 
+    // this function allows you to pick which payment method you are using to purchase the things you are wanting in the activities package. 
+    //by doing else and if statements it gives you options and once an option is picked the others disappear while form ogf the payment choden continues
+    
     let paymentMethod=document.getElementById('payment');
     let creditCard=document.getElementById('credit-card');
     let paypal=document.getElementById('paypal');
@@ -109,7 +123,7 @@ let form=document.querySelector('form');
     let emailTest= /^[a-zA-Z0-9, !#$%&'*+/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:|.[a-zA-Z0-9]+)$/i.test(emailValue);
 
     let cardValue= cardNumber.value;
-    let cardNumberTest= /^\b\d(13,16)\b$/.test(cardValue);
+    let cardNumberTest= /^\b\d(13,16)\b$/.test(cardValue); 
 
     let zipValue= zipCode.value;
     let zipTest= /^\d(5)$/.test(zipValue);
@@ -137,24 +151,24 @@ let form=document.querySelector('form');
   
     for(let i = 0; i< activities.length; i++) {
       if (activities[i].checked === true) {
-          numberChecked+=1;
+          numberChecked += 1;
           registerForActivities.classList.remove('not-valid');
           registerForActivities.classList.add('valid');
-          registerForActivities.classList.lastElementChild.style.display ='none';
+          registerForActivities.lastElementChild.style.display ='none';
       }
     }
         if (numberChecked === 0) {
-            e.preventDefault();
+            e.preventDefault(); 
     registerForActivities.classList.remove('valid');
     registerForActivities.classList.add('not-valid');
     registerForActivities.lastElementChild.style.display='block';
         }
     
 
-    let emailErrorSpan= documentGetElementById('emai;-hint');
+    let emailErrorSpan= document.getElementById('email-hint');
      
     if (emailValue==='') {
-        e.preventDefault();
+        e.preventDefault();        
 
         emailAdrress.parentNode.classList.remove('valid');
         emailAddress.parentNode.classList.add('not-valid');
@@ -162,23 +176,23 @@ let form=document.querySelector('form');
         emailErrorSpan.style.display='block';
 
     }else if (emailTest) {
-        e.preventDefault();
+        e.preventDefault(); 
         emailAddress.parentNode.classLsit.remove('valid');
         emailAddress.parentNode.classList.add('not-valid');
-        emailErrorSpan.textCont='Email msut be in the correct format';
+        emailErrorSpan.textCont='Email must be in the correct format';
         emailErrorSpan.style.display='block';
 
     }   else {
         emailAddress.parentNode.classList.remove('not-valid');
         emailAddress.parentNode.classList.add('valid');
-        emailAddress.parentNode.classList.style.display='none';
+        emailAddress.parentNode.lastElementChild.style.display='none';
 
     } 
     
     if (secondChild.selected===true) {
         
         if (cardNumberTest) {
-            e.preventDefault();
+            e.preventDefault(); 
             cardNumber.parentNode.classList.remove('valid');
             cardNumber.parentNode.classList.add('not-valid');
             cardNumber.parentNode.lastElementChild.style.display='block';
@@ -190,7 +204,7 @@ let form=document.querySelector('form');
         }
     
         if (zipTest) {
-            e.preventDefault();
+            e.preventDefault(); 
             zipCode.parentNode.classList.remove('valid');
             zipCode.parentNode.classList.add('not-valid');
             zipCode.parentNode.lastElemetnChild.style.display='block';
@@ -201,7 +215,7 @@ let form=document.querySelector('form');
             zipCode.parentNode.lastElementChild.style.display='none';
         }
          if (cvvTest) {
-             e.preventDefault();
+            e.preventDefault(); 
              cvv.parentNode.classList.remove('valid');
              cvv.parentNode.classList.add('not-valid');
              cvv.parentNode.lastElementChild.style.display='block';
@@ -214,7 +228,19 @@ let form=document.querySelector('form');
          
             }
         });
-          
+                
+        function validInput(element) {
+            element.parentElement.classList.remove('not-valid');
+            element.parentElement.classList.add('valid');
+            element.parentElement.lastElementChild.classList.remove('hint-display');
+        }
+        function invalidInput(element) {
+            element.parentElement.classList.add('not-valid');
+            element.parentELement.classList.remove('valid');
+            element.parentElement.lastElementChild.classList.add('hint-display');
+        } 
+    
+
         let activities= document.querySelector('input[type="checkbox"]');
 
             console.log(activities);
