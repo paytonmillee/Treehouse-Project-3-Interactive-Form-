@@ -96,33 +96,33 @@ paymentMethod.addEventListener("change", (e) => {
     paypal.style.display = "none";
   }
 });
-
+//this will make sure you are submitting the required fields in the correct format.
 let email = document.getElementById("email");
 let cardNumber = document.getElementById("cc-num");
 let zip = document.getElementById("zip");
 let cvv = document.getElementById("cvv");
 let form = document.querySelector("form");
-
+let activities = registerForActivitiesBox.getElementsByTagName("input");
 form.addEventListener("submit", (e) => {
   let nameValue = name.value;
   let nameTest = /^[a-zA-Z,.-]+$/i.test(nameValue);
   console.log(nameValue);
 
-  let emailValue = emailAddress.value;
+  let emailValue = email.value;
   let emailTest = /^[a-zA-Z0-9, !#$%&'*+/=?^_`{|}~]+@[a-zA-Z0-9-]+(?:|.[a-zA-Z0-9]+)$/i.test(
     emailValue
   );
 
   let cardValue = cardNumber.value;
-  let cardNumberTest = /^\b\d(13,16)\b$/.test(cardValue);
+  let cardNumberTest = /^\b\d{13,16}\b$/.test(cardValue);
 
-  let zipValue = zipCode.value;
-  let zipTest = /^\d(5)$/.test(zipValue);
+  let zipValue = zip.value;
+  let zipTest = /^\d{5}$/.test(zipValue);
 
   let cvvValue = cvv.value;
-  let cvvTest = /^\d(3)$/.test(cvvValue);
+  let cvvTest = /^\d{3}$/.test(cvvValue);
 
-  if (nameTest) {
+  if (name.value !== "") {
     validInput(name);
   } else {
     e.preventDefault();
@@ -130,15 +130,14 @@ form.addEventListener("submit", (e) => {
   }
 
   let numberChecked = 0;
-
+  //this counts the activities of which you checked
   for (let i = 0; i < activities.length; i++) {
+    console.log(activities[i]);
     if (activities[i].checked === true) {
       numberChecked += 1;
-      registerForActivities.classList.remove("not-valid");
-      registerForActivities.classList.add("valid");
-      registerForActivities.lastElementChild.style.display = "none";
     }
   }
+  //this will check if each field is put in correctly and if not it will highlight in red and will give you a message if apllied incorrectly
   if (numberChecked === 0) {
     e.preventDefault();
     invalidInput(registerForActivitiesBox);
@@ -184,14 +183,12 @@ function validInput(element) {
 }
 function invalidInput(element) {
   element.parentElement.classList.add("not-valid");
-  element.parentELement.classList.remove("valid");
+  element.parentElement.classList.remove("valid");
   element.parentElement.lastElementChild.classList.add("hint-display");
 }
 
-let activities = document.querySelector('input[type="checkbox"]');
-
 console.log(activities);
-
+//this focuses on the elements you are working on in the form and the ones that are not being completed will not be focused
 for (let i = 0; i < activities.length; i++) {
   activities[i].addEventListener("focus", (e) => {
     e.target.parentNode.classList.add("focus");
